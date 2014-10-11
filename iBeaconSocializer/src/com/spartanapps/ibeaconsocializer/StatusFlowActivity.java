@@ -32,6 +32,9 @@ public class StatusFlowActivity extends Activity {
 	ListView StatusList;
 	ArrayList<StatusFlowItem> myStatusList = new ArrayList<StatusFlowItem>();
 	
+	
+	
+	
 	private String MY_ID;
 	
 	SharedPreferences sharedpreferences;
