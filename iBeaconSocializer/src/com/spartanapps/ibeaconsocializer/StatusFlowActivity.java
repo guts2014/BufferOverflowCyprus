@@ -4,14 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.NotificationManager;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.RemoteException;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -26,6 +34,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+@SuppressLint("ValidFragment")
 public class StatusFlowActivity extends Activity {
 
 	StatusListArrayAdapter myStatusListAdapter;
@@ -40,8 +49,7 @@ public class StatusFlowActivity extends Activity {
 
 	private static final String MyPREFERENCES = "HACKATHON_IBEACON_APP";
 	private static final String ESTIMOTE_PROXIMITY_UUID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D";
-	private static final Region ALL_ESTIMOTE_BEACONS = new Region("regionId",
-			ESTIMOTE_PROXIMITY_UUID, null, null);
+
 	private ParseQuery<ParseObject> query;
 	private FindCallback<ParseObject> findQuery = new FindCallback<ParseObject>() {
 		public void done(List<ParseObject> objects, ParseException e) {
@@ -67,6 +75,9 @@ public class StatusFlowActivity extends Activity {
 		}
 	};
 
+	private static final Region ALL_ESTIMOTE_BEACONS = new Region("regionId",
+			ESTIMOTE_PROXIMITY_UUID, null, null);
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -74,11 +85,31 @@ public class StatusFlowActivity extends Activity {
 
 		StatusList = (ListView) findViewById(R.id.lvStatus);
 
+		// Check for WiFi or 3g and pop up network settings if not available
+		// +Bluetooth
+		ConnectivityManager manager = (ConnectivityManager) getSystemService(StatusFlowActivity.CONNECTIVITY_SERVICE);
+		Boolean is3g = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
+				.isConnectedOrConnecting();
+		Boolean iswifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+				.isConnectedOrConnecting();
+		// Boolean
+		// isBluetooth=manager.getNetworkInfo(ConnectivityManager.TYPE_BLUETOOTH).isAvailable();
+		// Enables Bluetooth
+		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter
+				.getDefaultAdapter();
+		mBluetoothAdapter.enable();
+
+		if (!is3g && !iswifi) {
+			DialogFragment alert = new NoConnectionDialog();
+			alert.show(getFragmentManager(), "alert");
+		}
+
 		// PARSE INIT
 		Parse.initialize(this, "O5hlONu2LBd04JvEdl8dEAwdVgDNj2lrBvawFXQS",
 				"EJTqizil9I3PcjpIuTs2jPzYLOpR2vDrFwx7EoIi");
 
 		// BEACON/SHARED PREF INIT
+
 		beaconManager = new BeaconManager(getApplicationContext());
 		sharedpreferences = getSharedPreferences(MyPREFERENCES,
 				Context.MODE_PRIVATE);
@@ -181,6 +212,38 @@ public class StatusFlowActivity extends Activity {
 		myStatusList.clear();
 		myStatusListAdapter.notifyDataSetChanged();
 		query.findInBackground(findQuery);
+	}
+
+	public class NoConnectionDialog extends DialogFragment {
+
+		@Override
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+			builder.setMessage(R.string.alert)
+					.setPositiveButton("OK",
+							new DialogInterface.OnClickListener() {
+								// Open Settings to enable wifi
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									startActivity(new Intent(
+											Settings.ACTION_WIFI_SETTINGS));
+
+								}
+							})
+					.setNegativeButton("Back",
+							new DialogInterface.OnClickListener() {
+								// If settings not provided exit
+								@Override
+								public void onClick(DialogInterface dialog,
+										int which) {
+									getActivity().finish();
+
+								}
+							});
+			return builder.create();
+		}
 	}
 
 }
