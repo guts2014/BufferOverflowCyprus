@@ -70,15 +70,8 @@ public class StatusFlowActivity extends Activity {
 				getApplicationContext(), R.layout.list_status_flow_item,
 				myStatusList);
 		StatusList.setAdapter(myStatusListAdapter);
-
-		// ---by default you scan 5s and then wait 25s
-		// for this demo, you will scan more
-		// frequently---
-		// beaconManager.setBackgroundScanPeriod(TimeUnit.SECONDS.toMillis(1),
-		// 0);
-
-		// START LISTENING FOR BEACONS
-		// INITIALIZE LISTENER
+		
+		
 		beaconManager.setRangingListener(new BeaconManager.RangingListener() {
 
 			@Override
@@ -92,8 +85,8 @@ public class StatusFlowActivity extends Activity {
 					final String CurrID = beacons.get(x).getProximityUUID()
 							+ ":" + beacons.get(x).getMajor() + ":"
 							+ beacons.get(x).getMinor();
-					Toast.makeText(getApplicationContext(), CurrID,
-							Toast.LENGTH_SHORT).show();
+//					Toast.makeText(getApplicationContext(), CurrID,
+//							Toast.LENGTH_SHORT).show();
 
 				}
 
@@ -120,9 +113,9 @@ public class StatusFlowActivity extends Activity {
 					myStatusListAdapter.notifyDataSetChanged();
 
 				} else {
-					Toast.makeText(getApplicationContext(),
-							"Error retrievindg status list...",
-							Toast.LENGTH_SHORT).show();
+//					Toast.makeText(getApplicationContext(),
+//							"Error retrievindg status list...",
+//							Toast.LENGTH_SHORT).show();
 				}
 			}
 		});

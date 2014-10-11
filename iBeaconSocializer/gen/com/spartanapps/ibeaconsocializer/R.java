@@ -26,37 +26,45 @@ public final class R {
     }
     public static final class drawable {
         public static final int bar=0x7f020000;
-        public static final int feedsico=0x7f020001;
-        public static final int feedsico_active=0x7f020002;
-        public static final int homeico=0x7f020003;
-        public static final int homeico_active=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
-        public static final int messagesico=0x7f020006;
-        public static final int messagesico_active=0x7f020007;
-        public static final int statusico=0x7f020008;
+        public static final int comment=0x7f020001;
+        public static final int feedsico=0x7f020002;
+        public static final int feedsico_active=0x7f020003;
+        public static final int homeico=0x7f020004;
+        public static final int homeico_active=0x7f020005;
+        public static final int ic_launcher=0x7f020006;
+        public static final int messagesico=0x7f020007;
+        public static final int messagesico_active=0x7f020008;
+        public static final int refresh_active=0x7f020009;
+        public static final int refresh_deactive=0x7f02000a;
+        public static final int statusico=0x7f02000b;
     }
     public static final class id {
-        public static final int action_settings=0x7f09000f;
-        public static final int btnUpdate=0x7f09000a;
-        public static final int button1=0x7f090006;
-        public static final int etAge=0x7f090007;
-        public static final int etGender=0x7f090008;
-        public static final int etStatus=0x7f090009;
+        public static final int action_settings=0x7f090013;
+        public static final int btnUpdate=0x7f09000b;
+        public static final int button1=0x7f090007;
+        public static final int etAge=0x7f090008;
+        public static final int etGender=0x7f090009;
+        public static final int etStatus=0x7f09000a;
         public static final int ivBar=0x7f090000;
-        public static final int ivFlowLogo=0x7f09000b;
-        public static final int ivMenuHome=0x7f090001;
-        public static final int ivMenuMessages=0x7f090003;
-        public static final int ivMenuUpdate=0x7f090002;
-        public static final int lvStatus=0x7f090004;
-        public static final int textView1=0x7f090005;
-        public static final int tvFlowAge=0x7f09000e;
-        public static final int tvFlowGender=0x7f09000d;
-        public static final int tvFlowStatus=0x7f09000c;
+        public static final int ivConLogo=0x7f09000c;
+        public static final int ivFlowLogo=0x7f09000f;
+        public static final int ivMenuHome=0x7f090002;
+        public static final int ivMenuHomesdsds=0x7f090001;
+        public static final int ivMenuMessages=0x7f090004;
+        public static final int ivMenuUpdate=0x7f090003;
+        public static final int lvStatus=0x7f090005;
+        public static final int textView1=0x7f090006;
+        public static final int tvConDate=0x7f09000d;
+        public static final int tvConTime=0x7f09000e;
+        public static final int tvFlowAge=0x7f090012;
+        public static final int tvFlowGender=0x7f090011;
+        public static final int tvFlowStatus=0x7f090010;
     }
     public static final class layout {
         public static final int activity_status_flow=0x7f030000;
         public static final int activity_update=0x7f030001;
-        public static final int list_status_flow_item=0x7f030002;
+        public static final int item_conversation=0x7f030002;
+        public static final int list_status_flow_item=0x7f030003;
     }
     public static final class menu {
         public static final int status_flow=0x7f080000;
