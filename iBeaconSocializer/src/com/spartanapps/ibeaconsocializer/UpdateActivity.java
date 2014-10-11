@@ -91,17 +91,6 @@ public class UpdateActivity extends Activity {
 		// frequently---
 		beaconManager.setBackgroundScanPeriod(TimeUnit.SECONDS.toMillis(1), 0);
 
-		beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
-			@Override
-			public void onServiceReady() {
-				try {
-					beaconManager.startRanging(ALL_ESTIMOTE_BEACONS);
-				} catch (RemoteException e) {
-
-				}
-			}
-		});
-		
 	}
 
 	@Override
@@ -115,7 +104,16 @@ public class UpdateActivity extends Activity {
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		
+		beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
+			@Override
+			public void onServiceReady() {
+				try {
+					beaconManager.startRanging(ALL_ESTIMOTE_BEACONS);
+				} catch (RemoteException e) {
+
+				}
+			}
+		});
 	}
 
 	@Override
@@ -146,16 +144,16 @@ public class UpdateActivity extends Activity {
 					// Double.toString(Utils.computeAccuracy(beacons.get(0))),
 					// Toast.LENGTH_SHORT).show();
 
-//					Toast.makeText(
-//							getApplicationContext(),
-//							beacons.get(x).getMajor() + ":"
-//									+ beacons.get(x).getMinor(),
-//							Toast.LENGTH_SHORT).show();
+					Toast.makeText(
+							getApplicationContext(),
+							beacons.get(x).getMajor() + ":"
+									+ beacons.get(x).getMinor(),
+							Toast.LENGTH_SHORT).show();
 
-//					Toast.makeText(getApplicationContext(), "FOUND MY BEACON",
-//							Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "FOUND MY BEACON",
+							Toast.LENGTH_SHORT).show();
 
-					if (Utils.computeAccuracy(beacons.get(x)) < 0.2) {
+					if (Utils.computeAccuracy(beacons.get(x)) < 1) {
 						Toast.makeText(getApplicationContext(),
 								"FOUND MY BEACON", Toast.LENGTH_SHORT).show();
 						MY_MAJOR = beacons.get(x).getMajor();
@@ -237,7 +235,12 @@ public class UpdateActivity extends Activity {
 			return;
 		}
 
-		
+		ParseObject beaconObject = new ParseObject("StatusFlow");
+		beaconObject.put("BeaconID", MY_ID);
+		beaconObject.put("Age", etAge.getText().toString());
+		beaconObject.put("Gender", etGender.getSelectedItem().toString());
+		beaconObject.put("Status", etStatus.getText().toString());
+		beaconObject.saveInBackground();
 		finish();
 
 	}
