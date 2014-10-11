@@ -1,9 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#615c45"
-    android:orientation="vertical"
     tools:context="com.spartanapps.ibeaconsocializer.UpdateActivity" >
 
     <ImageView
@@ -14,6 +13,43 @@
         android:layout_centerHorizontal="true"
         android:scaleType="fitXY"
         android:src="@drawable/bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        >
+
+        <ImageView
+            android:background="#37361b"
+            android:scaleType="fitCenter"
+         	android:layout_weight="1"
+            android:id="@+id/ivMenuHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/feedsico"
+            android:layout_marginRight="1dp" />
+        
+        <ImageView
+            android:background="#84825e"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            android:id="@+id/ivMenuUpdate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/homeico_active" 
+            android:layout_marginRight="1dp"/>
+        
+        <ImageView
+            android:background="#37361b"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            android:id="@+id/ivMenuMessages"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/messagesico" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView1"
@@ -30,122 +66,48 @@
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
-        android:onClick="btnConfigureClicked"
-        android:text="Configure" />
+        android:text="Configure"
+        android:onClick="btnConfigureClicked" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="horizontal" >
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:weightSum="3" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Age" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Gender" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Status" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical" >
-
-            <EditText
-                android:id="@+id/etAge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Give your age" />
-
-            <Spinner
-                android:id="@+id/etGender"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:drawSelectorOnTop="true"
-                android:ems="10"
-                android:entries="@array/male_female" />
-
-            <EditText
-                android:id="@+id/etStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:ems="10"
-                android:hint="Give your status" />
-        </LinearLayout>
-    </LinearLayout>
-
+   
     <Button
         android:id="@+id/btnUpdate"
+        android:onClick="btnUpdateClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_alignParentBottom="true"
         android:layout_marginBottom="80dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="14dp"
-        android:onClick="btnUpdateClicked"
         android:text="Update" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="bottom"
-        android:layout_weight="1"
-        android:gravity="bottom"
-        android:orientation="horizontal"
-        android:weightSum="3" >
+    <EditText
+        android:id="@+id/etAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:ems="10" />
 
-        <ImageView
-            android:id="@+id/ivMenuHome"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_marginRight="1dp"
-            android:layout_weight="1"
-            android:background="#37361b"
-            android:src="@drawable/feedsico" />
+    <EditText
+        android:id="@+id/etGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/etAge"
+        android:layout_centerVertical="true"
+        android:ems="10" />
 
-        <ImageView
-            android:id="@+id/ivMenuUpdate"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_marginRight="1dp"
-            android:layout_weight="1"
-            android:background="#84825e"
-            android:src="@drawable/homeico_active" />
+    <EditText
+        android:id="@+id/etStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/etGender"
+        android:layout_below="@+id/etGender"
+        android:layout_marginTop="26dp"
+        android:ems="10" />
 
-        <ImageView
-            android:id="@+id/ivMenuMessages"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_weight="1"
-            android:background="#37361b"
-            android:src="@drawable/messagesico" />
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

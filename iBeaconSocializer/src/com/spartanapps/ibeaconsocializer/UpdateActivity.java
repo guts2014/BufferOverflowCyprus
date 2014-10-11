@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.estimote.sdk.Beacon;
@@ -41,7 +40,7 @@ public class UpdateActivity extends Activity {
 
 	//VIEWS VARS
 	EditText etAge;
-	Spinner etGender;
+	EditText etGender;
 	EditText etStatus;
 	
 	//Functions
@@ -66,7 +65,7 @@ public class UpdateActivity extends Activity {
 		
 		//VIEWS VARS
 		etAge = (EditText) findViewById(R.id.etAge);
-		etGender = (Spinner) findViewById(R.id.etGender);
+		etGender = (EditText) findViewById(R.id.etGender);
 		etStatus = (EditText) findViewById(R.id.etStatus);
 		
 		//PARSE INIT
@@ -138,13 +137,8 @@ public class UpdateActivity extends Activity {
             	//LOOP THROUGH BEACONS LIST
             	int x;
             	for(x = 0;x<beacons.size();x++){
-
-            		//Toast.makeText(getApplicationContext(), Double.toString(Utils.computeAccuracy(beacons.get(0))), Toast.LENGTH_SHORT).show();
-            		
-            		Toast.makeText(getApplicationContext(), beacons.get(x).getMajor() + ":"+ beacons.get(x).getMinor(), Toast.LENGTH_SHORT).show();
-
             		if (Utils.computeAccuracy(beacons.get(x))< 0.5)  {
-            			Toast.makeText(getApplicationContext(), "FOUND MY BEACON", Toast.LENGTH_SHORT).show();
+            			//Toast.makeText(getApplicationContext(), "FOUND MY BEACON", Toast.LENGTH_SHORT).show();
             			MY_MAJOR = beacons.get(x).getMajor();
             			MY_MINOR = beacons.get(x).getMinor();
             			MY_UUID = beacons.get(x).getProximityUUID();
@@ -187,11 +181,11 @@ public class UpdateActivity extends Activity {
 		            	 //EXISTS
 		            	 objects.get(0).deleteInBackground();
 		            	 
-		            	 AddToStatusFlow(etStatus.getText().toString(),etAge.getText().toString(),etGender.getSelectedItem().toString(),MY_ID);
+		            	 AddToStatusFlow(etStatus.getText().toString(),etAge.getText().toString(),etGender.getText().toString(),MY_ID);
 		            	 
 		             } else {
 		            	 //DOESNT EXIST
-		            	 AddToStatusFlow(etStatus.getText().toString(),etAge.getText().toString(),etGender.getSelectedItem().toString(),MY_ID);
+		            	 AddToStatusFlow(etStatus.getText().toString(),etAge.getText().toString(),etGender.getText().toString(),MY_ID);
 		             }
 		         } else {
 		             Toast.makeText(getApplicationContext(), "Error querying database..", Toast.LENGTH_SHORT).show();
@@ -200,27 +194,6 @@ public class UpdateActivity extends Activity {
 		 });
 		
 		
-		//QUERY
-		boolean b = false;
-		try {
-			Integer age = Integer.parseInt(etAge.getText().toString());
-		}catch (NumberFormatException e) {
-			b = true;
-		}
 		
-		if (b == true || etStatus.getText().equals("")) {
-			Toast.makeText(getApplicationContext(), "Wron input given", Toast.LENGTH_SHORT).show();
-			return;
-		}
-		
-		
-		ParseObject beaconObject = new ParseObject("StatusFlow");
-		beaconObject.put("BeaconID", MY_ID);
-		beaconObject.put("Age",etAge.getText().toString());
-		beaconObject.put("Gender",etGender.getSelectedItem().toString());
-		beaconObject.put("Status",etStatus.getText().toString());
-		beaconObject.saveInBackground();
-		finish();
-
 	}
 }
