@@ -4,11 +4,11 @@ public class StatusFlowItem{
 	
 	private String innerID;
 	private String innerGender;
-	private int innerAge;
+	private String innerAge;
 	private String innerStatus;
 	
 	//CONSTRUCTORS
-	public StatusFlowItem(String ID, String Gender, int Age, String Status){
+	public StatusFlowItem(String ID, String Gender, String Age, String Status){
 		this.innerID = ID;
 		this.innerGender = Gender;
 		this.innerAge = Age;
@@ -23,7 +23,7 @@ public class StatusFlowItem{
 		return this.innerGender;
 	}
 	
-	public int getAge() {
+	public String getAge() {
 		return this.innerAge;
 	}
 	

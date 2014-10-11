@@ -49,9 +49,9 @@ public final class R {
         public static final int ivConLogo=0x7f09000c;
         public static final int ivFlowLogo=0x7f09000f;
         public static final int ivMenuHome=0x7f090002;
-        public static final int ivMenuHomesdsds=0x7f090001;
         public static final int ivMenuMessages=0x7f090004;
-        public static final int ivMenuUpdate=0x7f090003;
+        public static final int ivMenuRefresh=0x7f090003;
+        public static final int ivMenuUpdate=0x7f090001;
         public static final int lvStatus=0x7f090005;
         public static final int textView1=0x7f090006;
         public static final int tvConDate=0x7f09000d;

@@ -42,6 +42,30 @@ public class StatusFlowActivity extends Activity {
 	private static final String ESTIMOTE_PROXIMITY_UUID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D";
 	private static final Region ALL_ESTIMOTE_BEACONS = new Region("regionId",
 			ESTIMOTE_PROXIMITY_UUID, null, null);
+	private ParseQuery<ParseObject> query;
+	private FindCallback<ParseObject> findQuery = new FindCallback<ParseObject>() {
+		public void done(List<ParseObject> objects, ParseException e) {
+			if (e == null) {
+				int x;
+				myStatusList.clear();
+				myStatusListAdapter.notifyDataSetChanged();
+
+				for (x = 0; x < objects.size(); x++) {
+					StatusFlowItem myCurrentItem = new StatusFlowItem(objects
+							.get(x).getString("BeaconID"), objects.get(x)
+							.getString("Gender"), objects.get(x).getString(
+							"Age"), objects.get(x).getString("Status"));
+					myStatusList.add(myCurrentItem);
+					myStatusListAdapter.notifyDataSetChanged();
+				}
+
+			} else {
+				// Toast.makeText(getApplicationContext(),
+				// "Error retrievindg status list...",
+				// Toast.LENGTH_SHORT).show();
+			}
+		}
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -94,32 +118,20 @@ public class StatusFlowActivity extends Activity {
 		});
 
 		// PARSE QUERY
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("StatusFlow");
+		query = ParseQuery.getQuery("StatusFlow");
 		// query.whereEqualTo("BeaconID", CurrID);
-		query.findInBackground(new FindCallback<ParseObject>() {
-			public void done(List<ParseObject> objects, ParseException e) {
-				if (e == null) {
-					int x;
-					for (x = 0; x < objects.size(); x++) {
-						StatusFlowItem myCurrentItem = new StatusFlowItem(
-								objects.get(x).getString("BeaconID"), objects
-										.get(x).getString("Gender"), objects
-										.get(x).getInt("Age"), objects.get(x)
-										.getString("Status"));
-						myStatusList.add(myCurrentItem);
-					}
-
-					myStatusListAdapter.notifyDataSetChanged();
-
-				} else {
-					// Toast.makeText(getApplicationContext(),
-					// "Error retrievindg status list...",
-					// Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
+		query.findInBackground(findQuery);
 
 		// START LIST CREATION
+
+	}
+
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		myStatusList.clear();
+		myStatusListAdapter.notifyDataSetChanged();
+		query.findInBackground(findQuery);
 
 	}
 
@@ -164,4 +176,11 @@ public class StatusFlowActivity extends Activity {
 				UpdateActivity.class);
 		startActivity(myIntent);
 	}
+
+	public void menuRefresh(View target) {
+		myStatusList.clear();
+		myStatusListAdapter.notifyDataSetChanged();
+		query.findInBackground(findQuery);
+	}
+
 }

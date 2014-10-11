@@ -53,6 +53,7 @@ public class UpdateActivity extends Activity {
 		beaconObject.put("Age", Age);
 		beaconObject.put("Gender", Gender);
 		beaconObject.put("Status", Status);
+
 		beaconObject.saveInBackground();
 	}
 
@@ -101,7 +102,7 @@ public class UpdateActivity extends Activity {
 				}
 			}
 		});
-		
+
 	}
 
 	@Override
@@ -115,7 +116,7 @@ public class UpdateActivity extends Activity {
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		
+
 	}
 
 	@Override
@@ -146,14 +147,15 @@ public class UpdateActivity extends Activity {
 					// Double.toString(Utils.computeAccuracy(beacons.get(0))),
 					// Toast.LENGTH_SHORT).show();
 
-//					Toast.makeText(
-//							getApplicationContext(),
-//							beacons.get(x).getMajor() + ":"
-//									+ beacons.get(x).getMinor(),
-//							Toast.LENGTH_SHORT).show();
+					// Toast.makeText(
+					// getApplicationContext(),
+					// beacons.get(x).getMajor() + ":"
+					// + beacons.get(x).getMinor(),
+					// Toast.LENGTH_SHORT).show();
 
-//					Toast.makeText(getApplicationContext(), "FOUND MY BEACON",
-//							Toast.LENGTH_SHORT).show();
+					// Toast.makeText(getApplicationContext(),
+					// "FOUND MY BEACON",
+					// Toast.LENGTH_SHORT).show();
 
 					if (Utils.computeAccuracy(beacons.get(x)) < 0.2) {
 						Toast.makeText(getApplicationContext(),
@@ -204,9 +206,9 @@ public class UpdateActivity extends Activity {
 
 					} else {
 						// DOESNT EXIST
-//						AddToStatusFlow(etStatus.getText().toString(), etAge
-//								.getText().toString(), etGender
-//								.getSelectedItem().toString(), MY_ID);
+						AddToStatusFlow(etStatus.getText().toString(), etAge
+								.getText().toString(), etGender
+								.getSelectedItem().toString(), MY_ID);
 					}
 				} else {
 					Toast.makeText(getApplicationContext(),
@@ -224,7 +226,7 @@ public class UpdateActivity extends Activity {
 			b = true;
 		}
 
-		if (b == true || etStatus.getText().equals("") ) {
+		if (b == true || etStatus.getText().equals("")) {
 			Toast.makeText(getApplicationContext(), "Wrong input given",
 					Toast.LENGTH_SHORT).show();
 			return;
@@ -237,8 +239,11 @@ public class UpdateActivity extends Activity {
 			return;
 		}
 
-		
 		finish();
 
+	}
+
+	public void terminate(View target) {
+		finish();
 	}
 }

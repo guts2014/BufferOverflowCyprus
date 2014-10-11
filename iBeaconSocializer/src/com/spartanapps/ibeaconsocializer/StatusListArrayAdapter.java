@@ -51,14 +51,9 @@ public class StatusListArrayAdapter extends ArrayAdapter<StatusFlowItem> {
 		TextView tvAge = (TextView) rowView.findViewById(R.id.tvFlowAge);
 		ImageView ivLogo = (ImageView) rowView.findViewById(R.id.ivFlowLogo);
 
-		
-		int a = values.get(position).getAge();
-		
-		
-		
 		tvStatus.setText(values.get(position).getStatus());
 		tvGender.setText(values.get(position).getGender());
-		tvAge.setText(Integer.toString(values.get(position).getAge()));
+		tvAge.setText(values.get(position).getAge());
 
 		return rowView;
 	}
