@@ -74,7 +74,6 @@ public class StatusFlowActivity extends Activity {
         // for this demo, you will scan more
         // frequently---
         //beaconManager.setBackgroundScanPeriod(TimeUnit.SECONDS.toMillis(1), 0);
-		beaconManager.setForegroundScanPeriod(TimeUnit.SECONDS.toMillis(1), 0);
         
         //START LISTENING FOR BEACONS
         //INITIALIZE LISTENER
@@ -82,7 +81,7 @@ public class StatusFlowActivity extends Activity {
         	
             @Override 
             public void onBeaconsDiscovered(Region region, List<Beacon> beacons) {
-            	myStatusList.clear();
+            	
             	
             	//LOOP THROUGH BEACONS LIST
             	int x;
@@ -90,36 +89,39 @@ public class StatusFlowActivity extends Activity {
             	for(x = 0;x<beacons.size();x++){
             		
             			final String CurrID= beacons.get(x).getProximityUUID()+":"+beacons.get(x).getMajor()+":"+beacons.get(x).getMinor();
-            			//Toast.makeText(getApplicationContext(), CurrID, Toast.LENGTH_SHORT).show();
-            			//PARSE QUERY
-            			ParseQuery<ParseObject> query = ParseQuery.getQuery("StatusFlow");
-            			query.whereEqualTo("BeaconID", CurrID);
-            			 query.findInBackground(new FindCallback<ParseObject>() {
-            			     public void done(List<ParseObject> objects, ParseException e) {
-            			         if (e == null) {
-            			        	 int x;
-            			        	 for ( x =0;x<objects.size();x++){
-            			        		 Toast.makeText(getApplicationContext(), Integer.toString(objects.size()), Toast.LENGTH_SHORT).show();
-            			        		 StatusFlowItem myCurrentItem = new StatusFlowItem(objects.get(x).getString("BeaconID"),objects.get(x).getString("Gender"),objects.get(x).getInt("Age"),objects.get(x).getString("Status"));
-            			        		 myStatusList.add(myCurrentItem);
-            			        		 myStatusListAdapter.notifyDataSetChanged();
-            			        	 }
-            			        	 
-            			        	 
-            			        	 
-            			         } else {
-            			             Toast.makeText(getApplicationContext(), "Error retrievindg status list...", Toast.LENGTH_SHORT).show();
-            			         }
-            			     }
-            			 });
+            			Toast.makeText(getApplicationContext(), CurrID, Toast.LENGTH_SHORT).show();
+            			
             		}
-            	
             		
             	}
             	
             });
         
-	
+        
+      //PARSE QUERY
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("StatusFlow");
+		//query.whereEqualTo("BeaconID", CurrID);
+		 query.findInBackground(new FindCallback<ParseObject>() {
+		     public void done(List<ParseObject> objects, ParseException e) {
+		         if (e == null) {
+		        	 int x;
+		        	 for ( x =0;x<objects.size();x++){
+		        		 StatusFlowItem myCurrentItem = new StatusFlowItem(objects.get(x).getString("BeaconID"),objects.get(x).getString("Gender"),objects.get(x).getInt("Age"),objects.get(x).getString("Status"));
+		        		 myStatusList.add(myCurrentItem);
+		        	 }
+		        	 
+		        	 myStatusListAdapter.notifyDataSetChanged();
+		        	 
+		         } else {
+		             Toast.makeText(getApplicationContext(), "Error retrievindg status list...", Toast.LENGTH_SHORT).show();
+		         }
+		     }
+		 });
+          
+		//START LIST CREATION
+		
+		
+		
 	}
 
 	@Override
