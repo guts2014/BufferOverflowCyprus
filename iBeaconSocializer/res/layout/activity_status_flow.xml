@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#615c45"
+    tools:context="com.spartanapps.ibeaconsocializer.StatusFlowActivity" >
+
+    <ImageView
+        android:id="@+id/ivBar"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        >
+
+        <ImageView
+            android:background="#84825e"
+            android:scaleType="fitCenter"
+         	android:layout_weight="1"
+            android:id="@+id/ivMenuHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/feedsico_active"
+            android:layout_marginRight="1dp" />
+        
+        <ImageView
+            android:background="#37361b"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            android:id="@+id/ivMenuUpdate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/homeico" 
+            android:onClick="menuUpdateClicked"
+            android:layout_marginRight="1dp"/>
+        
+        <ImageView
+            android:background="#37361b"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            android:id="@+id/ivMenuMessages"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/messagesico" />
+        
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lvStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp" >
+    </ListView>
+
+</RelativeLayout>

@@ -1,0 +1,113 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#615c45"
+    tools:context="com.spartanapps.ibeaconsocializer.UpdateActivity" >
+
+    <ImageView
+        android:id="@+id/ivBar"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        >
+
+        <ImageView
+            android:background="#37361b"
+            android:scaleType="fitCenter"
+         	android:layout_weight="1"
+            android:id="@+id/ivMenuHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/feedsico"
+            android:layout_marginRight="1dp" />
+        
+        <ImageView
+            android:background="#84825e"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            android:id="@+id/ivMenuUpdate"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/homeico_active" 
+            android:layout_marginRight="1dp"/>
+        
+        <ImageView
+            android:background="#37361b"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            android:id="@+id/ivMenuMessages"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/messagesico" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivBar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Place the iBeacon on the back of the phone and press &quot;Configure&quot;"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18dp"
+        android:text="Configure"
+        android:onClick="btnConfigureClicked" />
+
+   
+    <Button
+        android:id="@+id/btnUpdate"
+        android:onClick="btnUpdateClicked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:text="Update" />
+
+    <EditText
+        android:id="@+id/etAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="22dp"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/etGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/etAge"
+        android:layout_centerVertical="true"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/etStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/etGender"
+        android:layout_below="@+id/etGender"
+        android:layout_marginTop="26dp"
+        android:ems="10" />
+
+</RelativeLayout>
