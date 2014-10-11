@@ -16,41 +16,55 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="120dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        >
+        android:orientation="vertical" >
 
         <ImageView
-            android:background="#84825e"
-            android:scaleType="fitCenter"
-         	android:layout_weight="1"
-            android:id="@+id/ivMenuHome"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/feedsico_active"
-            android:layout_marginRight="1dp" />
-        
-        <ImageView
+            android:id="@+id/ivMenuHomesdsds"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="1"
             android:background="#37361b"
             android:scaleType="fitCenter"
-            android:layout_weight="1"
-            android:id="@+id/ivMenuUpdate"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/homeico" 
-            android:onClick="menuUpdateClicked"
-            android:layout_marginRight="1dp"/>
-        
-        <ImageView
-            android:background="#37361b"
-            android:scaleType="fitCenter"
-            android:layout_weight="1"
-            android:id="@+id/ivMenuMessages"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/messagesico" />
-        
+            android:src="@drawable/refresh_deactive" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/ivMenuHome"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="1dp"
+                android:layout_weight="1"
+                android:background="#84825e"
+                android:scaleType="fitCenter"
+                android:src="@drawable/feedsico_active" />
+
+            <ImageView
+                android:id="@+id/ivMenuUpdate"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="1dp"
+                android:layout_weight="1"
+                android:background="#37361b"
+                android:onClick="menuUpdateClicked"
+                android:scaleType="fitCenter"
+                android:src="@drawable/homeico" />
+
+            <ImageView
+                android:id="@+id/ivMenuMessages"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#37361b"
+                android:scaleType="fitCenter"
+                android:src="@drawable/messagesico" />
+        </LinearLayout>
     </LinearLayout>
 
     <ListView
@@ -59,7 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivBar"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp" >
+        android:layout_marginBottom="120dp" >
     </ListView>
 
 </RelativeLayout>
