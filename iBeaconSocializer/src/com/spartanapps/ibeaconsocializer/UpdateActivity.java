@@ -150,7 +150,10 @@ public class UpdateActivity extends Activity {
 									+ beacons.get(x).getMinor(),
 							Toast.LENGTH_SHORT).show();
 
-					if (Utils.computeAccuracy(beacons.get(x)) < 0.5) {
+					Toast.makeText(getApplicationContext(), "FOUND MY BEACON",
+							Toast.LENGTH_SHORT).show();
+
+					if (Utils.computeAccuracy(beacons.get(x)) < 1) {
 						Toast.makeText(getApplicationContext(),
 								"FOUND MY BEACON", Toast.LENGTH_SHORT).show();
 						MY_MAJOR = beacons.get(x).getMajor();
@@ -199,9 +202,9 @@ public class UpdateActivity extends Activity {
 
 					} else {
 						// DOESNT EXIST
-						AddToStatusFlow(etStatus.getText().toString(), etAge
-								.getText().toString(), etGender
-								.getSelectedItem().toString(), MY_ID);
+//						AddToStatusFlow(etStatus.getText().toString(), etAge
+//								.getText().toString(), etGender
+//								.getSelectedItem().toString(), MY_ID);
 					}
 				} else {
 					Toast.makeText(getApplicationContext(),
@@ -219,8 +222,15 @@ public class UpdateActivity extends Activity {
 			b = true;
 		}
 
-		if (b == true || etStatus.getText().equals("")) {
-			Toast.makeText(getApplicationContext(), "Wron input given",
+		if (b == true || etStatus.getText().equals("") ) {
+			Toast.makeText(getApplicationContext(), "Wrong input given",
+					Toast.LENGTH_SHORT).show();
+			return;
+		}
+
+		if (MY_ID == null || MY_ID.equals("")) {
+			Toast.makeText(getApplicationContext(),
+					"Unable to use service - Please try to re-configure",
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
