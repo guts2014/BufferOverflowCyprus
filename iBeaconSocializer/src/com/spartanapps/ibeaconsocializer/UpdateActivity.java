@@ -92,16 +92,61 @@ public class UpdateActivity extends Activity {
 		// frequently---
 		beaconManager.setBackgroundScanPeriod(TimeUnit.SECONDS.toMillis(1), 0);
 
-		beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
-			@Override
-			public void onServiceReady() {
-				try {
-					beaconManager.startRanging(ALL_ESTIMOTE_BEACONS);
-				} catch (RemoteException e) {
+		// INITIALIZE LISTENER
+				beaconManager.setRangingListener(new BeaconManager.RangingListener() {
 
-				}
-			}
-		});
+					@Override
+					public void onBeaconsDiscovered(Region region, List<Beacon> beacons) {
+
+						// LOOP THROUGH BEACONS LIST
+						int x;
+						for (x = 0; x < beacons.size(); x++) {
+
+							// Toast.makeText(getApplicationContext(),
+							// Double.toString(Utils.computeAccuracy(beacons.get(0))),
+							// Toast.LENGTH_SHORT).show();
+
+							// Toast.makeText(
+							// getApplicationContext(),
+							// beacons.get(x).getMajor() + ":"
+							// + beacons.get(x).getMinor(),
+							// Toast.LENGTH_SHORT).show();
+
+							// Toast.makeText(getApplicationContext(),
+							// "FOUND MY BEACON",
+							// Toast.LENGTH_SHORT).show();
+
+							if (Utils.computeAccuracy(beacons.get(x)) < 0.2) {
+								Toast.makeText(getApplicationContext(),
+										"FOUND MY BEACON", Toast.LENGTH_SHORT).show();
+								MY_MAJOR = beacons.get(x).getMajor();
+								MY_MINOR = beacons.get(x).getMinor();
+								MY_UUID = beacons.get(x).getProximityUUID();
+
+								try {
+									beaconManager.stopRanging(ALL_ESTIMOTE_BEACONS);
+								} catch (RemoteException e) {
+
+								}
+
+							}
+
+						}
+						if (MY_UUID != null)
+							if (x == beacons.size()) {
+
+								MY_ID = MY_UUID + ":" + MY_MAJOR + ":" + MY_MINOR;
+								Editor editor = sharedpreferences.edit();
+								editor.putString("BeaconID", MY_ID);
+								editor.commit();
+
+								Toast.makeText(getApplicationContext(), MY_ID,
+										Toast.LENGTH_SHORT).show();
+
+							}
+
+					}
+				});
 
 	}
 
@@ -133,61 +178,22 @@ public class UpdateActivity extends Activity {
 	}
 
 	public void btnConfigureClicked(View target) {
-		// INITIALIZE LISTENER
-		beaconManager.setRangingListener(new BeaconManager.RangingListener() {
-
+		
+		
+		
+		beaconManager.connect(new BeaconManager.ServiceReadyCallback() {
 			@Override
-			public void onBeaconsDiscovered(Region region, List<Beacon> beacons) {
-
-				// LOOP THROUGH BEACONS LIST
-				int x;
-				for (x = 0; x < beacons.size(); x++) {
-
-					// Toast.makeText(getApplicationContext(),
-					// Double.toString(Utils.computeAccuracy(beacons.get(0))),
-					// Toast.LENGTH_SHORT).show();
-
-					// Toast.makeText(
-					// getApplicationContext(),
-					// beacons.get(x).getMajor() + ":"
-					// + beacons.get(x).getMinor(),
-					// Toast.LENGTH_SHORT).show();
-
-					// Toast.makeText(getApplicationContext(),
-					// "FOUND MY BEACON",
-					// Toast.LENGTH_SHORT).show();
-
-					if (Utils.computeAccuracy(beacons.get(x)) < 0.2) {
-						Toast.makeText(getApplicationContext(),
-								"FOUND MY BEACON", Toast.LENGTH_SHORT).show();
-						MY_MAJOR = beacons.get(x).getMajor();
-						MY_MINOR = beacons.get(x).getMinor();
-						MY_UUID = beacons.get(x).getProximityUUID();
-
-						try {
-							beaconManager.stopRanging(ALL_ESTIMOTE_BEACONS);
-						} catch (RemoteException e) {
-
-						}
-
-					}
+			public void onServiceReady() {
+				try {
+					beaconManager.startRanging(ALL_ESTIMOTE_BEACONS);
+				} catch (RemoteException e) {
 
 				}
-				if (MY_UUID != null)
-					if (x == beacons.size()) {
-
-						MY_ID = MY_UUID + ":" + MY_MAJOR + ":" + MY_MINOR;
-						Editor editor = sharedpreferences.edit();
-						editor.putString("BeaconID", MY_ID);
-						editor.commit();
-
-						Toast.makeText(getApplicationContext(), MY_ID,
-								Toast.LENGTH_SHORT).show();
-
-					}
-
 			}
 		});
+		
+		
+		
 	}
 
 	public void btnUpdateClicked(View target) {

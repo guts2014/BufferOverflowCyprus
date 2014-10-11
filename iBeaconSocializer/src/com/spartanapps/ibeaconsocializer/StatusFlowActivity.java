@@ -2,7 +2,6 @@ package com.spartanapps.ibeaconsocializer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -15,19 +14,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
-import com.estimote.sdk.Utils;
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -87,22 +83,13 @@ public class StatusFlowActivity extends Activity {
 
 		// Check for WiFi or 3g and pop up network settings if not available
 		// +Bluetooth
-		ConnectivityManager manager = (ConnectivityManager) getSystemService(StatusFlowActivity.CONNECTIVITY_SERVICE);
-		Boolean is3g = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
-				.isConnectedOrConnecting();
-		Boolean iswifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
-				.isConnectedOrConnecting();
+
 		// Boolean
 		// isBluetooth=manager.getNetworkInfo(ConnectivityManager.TYPE_BLUETOOTH).isAvailable();
 		// Enables Bluetooth
 		BluetoothAdapter mBluetoothAdapter = BluetoothAdapter
 				.getDefaultAdapter();
 		mBluetoothAdapter.enable();
-
-		if (!is3g && !iswifi) {
-			DialogFragment alert = new NoConnectionDialog();
-			alert.show(getFragmentManager(), "alert");
-		}
 
 		// PARSE INIT
 		Parse.initialize(this, "O5hlONu2LBd04JvEdl8dEAwdVgDNj2lrBvawFXQS",
@@ -151,7 +138,7 @@ public class StatusFlowActivity extends Activity {
 		// PARSE QUERY
 		query = ParseQuery.getQuery("StatusFlow");
 		// query.whereEqualTo("BeaconID", CurrID);
-		query.findInBackground(findQuery);
+		//query.findInBackground(findQuery);
 
 		// START LIST CREATION
 
@@ -160,10 +147,26 @@ public class StatusFlowActivity extends Activity {
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		myStatusList.clear();
-		myStatusListAdapter.notifyDataSetChanged();
-		query.findInBackground(findQuery);
 
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		ConnectivityManager manager = (ConnectivityManager) getSystemService(StatusFlowActivity.CONNECTIVITY_SERVICE);
+
+		Boolean is3g = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
+				.isConnectedOrConnecting();
+		Boolean iswifi = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+				.isConnectedOrConnecting();
+		if (!is3g && !iswifi) {
+			DialogFragment alert = new NoConnectionDialog();
+			alert.show(getFragmentManager(), "alert");
+		} else {
+			myStatusList.clear();
+			myStatusListAdapter.notifyDataSetChanged();
+			query.findInBackground(findQuery);
+		}
 	}
 
 	@Override
