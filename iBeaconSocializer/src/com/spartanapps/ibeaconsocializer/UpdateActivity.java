@@ -18,10 +18,15 @@ import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
 import com.estimote.sdk.Utils;
+import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 public class UpdateActivity extends Activity {
+
 
 	private int MY_MAJOR;
 	private int MY_MINOR;
@@ -37,6 +42,17 @@ public class UpdateActivity extends Activity {
 	EditText etAge;
 	EditText etGender;
 	EditText etStatus;
+	
+	//Functions
+	public void AddToStatusFlow(String Status,String Age,String Gender,String MYID){
+		 //DOESNT EXIST
+    	ParseObject beaconObject = new ParseObject("StatusFlow");
+ 		beaconObject.put("BeaconID", MYID);
+ 		beaconObject.put("Age",Age);
+ 		beaconObject.put("Gender",Gender);
+ 		beaconObject.put("Status",Status);
+ 		beaconObject.saveInBackground();
+	}
 	
 	SharedPreferences sharedpreferences;	
 	private BeaconManager beaconManager;
@@ -72,10 +88,7 @@ public class UpdateActivity extends Activity {
         // frequently---
         beaconManager.setBackgroundScanPeriod(TimeUnit.SECONDS.toMillis(1), 0);
         
-      
-                
-     
-		
+	
 	}
 
 	@Override
@@ -124,9 +137,6 @@ public class UpdateActivity extends Activity {
             	//LOOP THROUGH BEACONS LIST
             	int x;
             	for(x = 0;x<beacons.size();x++){
-            		//Toast.makeText(getApplicationContext(), Double.toString(Utils.computeAccuracy(beacons.get(0))), Toast.LENGTH_SHORT).show();
-            		
-            		//Toast.makeText(getApplicationContext(), beacons.get(x).getMajor() + ":"+ beacons.get(x).getMinor(), Toast.LENGTH_SHORT).show();
             		if (Utils.computeAccuracy(beacons.get(x))< 0.5)  {
             			//Toast.makeText(getApplicationContext(), "FOUND MY BEACON", Toast.LENGTH_SHORT).show();
             			MY_MAJOR = beacons.get(x).getMajor();
@@ -162,14 +172,28 @@ public class UpdateActivity extends Activity {
 	}
 	
 	public void btnUpdateClicked(View target){
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("StatusFlow");
+		query.whereEqualTo("BeaconID", MY_ID);
+		 query.findInBackground(new FindCallback<ParseObject>() {
+		     public void done(List<ParseObject> objects, ParseException e) {
+		         if (e == null) {
+		             if (objects.size() > 0){
+		            	 //EXISTS
+		            	 objects.get(0).deleteInBackground();
+		            	 
+		            	 AddToStatusFlow(etStatus.getText().toString(),etAge.getText().toString(),etGender.getText().toString(),MY_ID);
+		            	 
+		             } else {
+		            	 //DOESNT EXIST
+		            	 AddToStatusFlow(etStatus.getText().toString(),etAge.getText().toString(),etGender.getText().toString(),MY_ID);
+		             }
+		         } else {
+		             Toast.makeText(getApplicationContext(), "Error querying database..", Toast.LENGTH_SHORT).show();
+		         }
+		     }
+		 });
 		
-		//QUERY
 		
-		ParseObject beaconObject = new ParseObject("StatusFlow");
-		beaconObject.put("BeaconID", MY_ID);
-		beaconObject.put("Age",etAge.getText().toString());
-		beaconObject.put("Gender",etGender.getText().toString());
-		beaconObject.put("Status",etStatus.getText().toString());
-		beaconObject.saveInBackground();
+		
 	}
 }
