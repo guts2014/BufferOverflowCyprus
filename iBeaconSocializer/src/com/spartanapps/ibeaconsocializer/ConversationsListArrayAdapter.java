@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import android.R;
 import android.content.Context;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
@@ -25,9 +24,10 @@ public class ConversationsListArrayAdapter extends
 	public ConversationsListArrayAdapter(Context context, int resource,
 			List<ConversationItem> myvalues) {
 		super(context, R.layout.conversation_item, myvalues);
-		this.context = context	;
+		this.context = context;
 		this.values = myvalues;
 		this.innerResource = R.layout.conversation_item;
+
 	}
 
 	@Override
@@ -37,6 +37,7 @@ public class ConversationsListArrayAdapter extends
 
 		LayoutInflater vi;
 		vi = LayoutInflater.from(getContext());
+
 		rowView = vi.inflate(R.layout.conversation_item, null);
 
 		LinearLayout l = (LinearLayout) rowView.findViewById(R.id.layoutParent);
@@ -49,8 +50,11 @@ public class ConversationsListArrayAdapter extends
 				.getInnerLastMessageDate()));
 
 		if (values.get(position).getInnerUser1()
-				.equals(values.get(position).getInnerUser2()))
+				.equals(values.get(position).getInnerUser2())){
 			l.setBackgroundColor(context.getResources().getColor(R.color.telos));
+			
+		}
+			
 
 		tvDate.setText(sdf.format(resultdate));
 		tvLastMessage.setText(values.get(position).getInnerMessage());

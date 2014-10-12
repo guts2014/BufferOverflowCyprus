@@ -2,6 +2,7 @@ package com.spartanapps.ibeaconsocializer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -18,8 +19,10 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.estimote.sdk.Beacon;
 import com.estimote.sdk.BeaconManager;
@@ -45,6 +48,8 @@ public class StatusFlowActivity extends Activity {
 	private BeaconManager beaconManager;
 	private NotificationManager notificationManager;
 
+	ArrayList<String> IDSList = new ArrayList<String>();
+
 	private static final String MyPREFERENCES = "HACKATHON_IBEACON_APP";
 	private static final String ESTIMOTE_PROXIMITY_UUID = "B9407F30-F5F8-466E-AFF9-25556B57FE6D";
 
@@ -55,8 +60,6 @@ public class StatusFlowActivity extends Activity {
 
 				synchronized (lock) {
 					int x;
-					myStatusList.clear();
-					myStatusListAdapter.notifyDataSetChanged();
 
 					for (x = 0; x < objects.size(); x++) {
 						StatusFlowItem myCurrentItem = new StatusFlowItem(
@@ -64,8 +67,10 @@ public class StatusFlowActivity extends Activity {
 										.get(x).getString("Gender"), objects
 										.get(x).getString("Age"), objects
 										.get(x).getString("Status"));
+						
 						myStatusList.add(myCurrentItem);
 						myStatusListAdapter.notifyDataSetChanged();
+
 					}
 				}
 
@@ -107,6 +112,8 @@ public class StatusFlowActivity extends Activity {
 		sharedpreferences = getSharedPreferences(MyPREFERENCES,
 				Context.MODE_PRIVATE);
 
+		beaconManager.setForegroundScanPeriod(TimeUnit.SECONDS.toMillis(5), 0);
+
 		// GET YOUR SAVED ID
 		if (sharedpreferences.contains("BeaconID")) {
 			MY_ID = sharedpreferences.getString("BeaconID", "");
@@ -114,9 +121,8 @@ public class StatusFlowActivity extends Activity {
 		}
 
 		// LIST ADAPTER
-		myStatusListAdapter = new StatusListArrayAdapter(
-				this, R.layout.list_status_flow_item,
-				myStatusList);
+		myStatusListAdapter = new StatusListArrayAdapter(this,
+				R.layout.list_status_flow_item, myStatusList);
 		StatusList.setAdapter(myStatusListAdapter);
 
 		beaconManager.setRangingListener(new BeaconManager.RangingListener() {
@@ -124,6 +130,7 @@ public class StatusFlowActivity extends Activity {
 			@Override
 			public void onBeaconsDiscovered(Region region, List<Beacon> beacons) {
 
+				IDSList.clear();
 				// LOOP THROUGH BEACONS LIST
 				int x;
 
@@ -134,7 +141,7 @@ public class StatusFlowActivity extends Activity {
 							+ beacons.get(x).getMinor();
 					// Toast.makeText(getApplicationContext(), CurrID,
 					// Toast.LENGTH_SHORT).show();
-
+					IDSList.add(CurrID);
 				}
 
 			}
@@ -142,11 +149,7 @@ public class StatusFlowActivity extends Activity {
 		});
 
 		// PARSE QUERY
-		query = ParseQuery.getQuery("StatusFlow");
-		// query.whereEqualTo("BeaconID", CurrID);
-		// query.findInBackground(findQuery);
-
-		// START LIST CREATION
+		getServer();
 
 	}
 
@@ -174,8 +177,18 @@ public class StatusFlowActivity extends Activity {
 			alert.show(getFragmentManager(), "alert");
 		} else {
 			myStatusList.clear();
+			for (String str : IDSList) {
+				Log.e ("Main",str + "+" + MY_ID);
+				
+				if (!str.equals(MY_ID)) {
+					ParseQuery<ParseObject> query = ParseQuery
+							.getQuery("StatusFlow");
+					query.whereEqualTo("BeaconID", str);
+					query.findInBackground(findQuery);
+				}
+
+			}
 			myStatusListAdapter.notifyDataSetChanged();
-			query.findInBackground(findQuery);
 		}
 	}
 
@@ -224,12 +237,11 @@ public class StatusFlowActivity extends Activity {
 	public void callChat(View target) {
 		Intent myIntent = new Intent(StatusFlowActivity.this,
 				MessagesActivity.class);
-		
+
 		myIntent.putExtra("PRIMARY_KEY", MY_ID);
 		startActivity(myIntent);
 	}
-	
-	
+
 	public void menuRefresh(View target) {
 
 		getServer();

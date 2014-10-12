@@ -20,24 +20,32 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-            android:layout_weight="1">
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
 
             <ListView
                 android:id="@+id/lvConversations"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:dividerHeight="10dip"
-                android:layout_margin="10dp" >
+                android:layout_margin="10dp"
+                android:dividerHeight="10dip" >
             </ListView>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="109dp"
+            android:layout_height="wrap_content"
             android:background="#37361b"
             android:gravity="bottom"
             android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/buttonGamoto"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:onClick="tiSkataGinete"
+                android:text="Refresh" />
 
             <Button
                 android:id="@+id/buttonSend"
@@ -80,7 +88,6 @@
                     android:src="@drawable/messagesico_active" />
             </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
 
 </LinearLayout>

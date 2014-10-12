@@ -5,8 +5,7 @@
     android:background="#615c45"
     android:orientation="vertical"
     tools:context="com.spartanapps.ibeaconsocializer.UpdateActivity" >
-
-    <ImageView
+ <ImageView
         android:id="@+id/ivBar"
         android:layout_width="match_parent"
         android:layout_height="10dp"
@@ -14,7 +13,8 @@
         android:layout_centerHorizontal="true"
         android:scaleType="fitXY"
         android:src="@drawable/bar" />
-
+    
+   
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -145,6 +145,7 @@
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:layout_weight="1"
+            android:onClick="menuUpdateClicked"
             android:background="#37361b"
             android:src="@drawable/messagesico" />
     </LinearLayout>

@@ -1,6 +1,7 @@
 package com.spartanapps.ibeaconsocializer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.concurrent.Executors;
@@ -49,6 +50,7 @@ public class MessagesActivity extends Activity {
 		public void done(List<ParseObject> objects, ParseException e) {
 			if (e == null) {
 				int x;
+				myConversationsList.clear();
 				for (x = 0; x < objects.size(); x++) {
 
 					ConversationItem myCurrentItem = new ConversationItem(
@@ -59,9 +61,14 @@ public class MessagesActivity extends Activity {
 									.getLong("LastMessageDate"));
 
 					myConversationsList.add(myCurrentItem);
-					myConversationsListAdapter.notifyDataSetChanged();
 
 				}
+
+				Collections.sort(myConversationsList,
+						ConversationItem.SORT_TEAMS);
+
+				myConversationsListAdapter.notifyDataSetChanged();
+
 			} else {
 				Toast.makeText(getApplicationContext(),
 						"Error retrievindg status list...", Toast.LENGTH_SHORT)
@@ -180,18 +187,31 @@ public class MessagesActivity extends Activity {
 			elagiemou();
 		}
 
-		
-		
-		
 	}
 
 	public void elagiemou() {
-		Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_SHORT).show();
+		// Toast.makeText(getApplicationContext(), "Hello", Toast.LENGTH_SHORT)
+		// .show();
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Chat");
 		query.whereEqualTo("User1", primaryKey);
 		query.findInBackground(skata);
 		myConversationsListAdapter.notifyDataSetChanged();
 
+	}
+
+	public void menuUpdateClicked(View target) {
+
+		Intent myIntent = new Intent(MessagesActivity.this,
+				UpdateActivity.class);
+		startActivity(myIntent);
+
+		finish();
+
+	}
+
+	public void tiSkataGinete(View target) {
+
+		elagiemou();
 	}
 
 }

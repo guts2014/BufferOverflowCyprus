@@ -1,6 +1,8 @@
 package com.spartanapps.ibeaconsocializer;
 
-public class ConversationItem {
+import java.util.Comparator;
+
+public class ConversationItem implements Comparable<ConversationItem> {
 
 	private String innerUser1;
 	private String innerUser2;
@@ -52,12 +54,28 @@ public class ConversationItem {
 	}
 
 	public long getInnerLastMessageDate() {
-		
+
 		return innerLastMessageDate;
 	}
 
 	public void setInnerLastMessageDate(int innerLastMessageDate) {
 		this.innerLastMessageDate = innerLastMessageDate;
+	}
+
+	public static Comparator<ConversationItem> SORT_TEAMS = new Comparator<ConversationItem>() {
+		@Override
+		public int compare(ConversationItem o1, ConversationItem o2) {
+			if (o1.getInnerLastMessageDate() > o2.getInnerLastMessageDate())
+				return -1;
+			else
+				return 1;
+		}
+	};
+
+	@Override
+	public int compareTo(ConversationItem arg0) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

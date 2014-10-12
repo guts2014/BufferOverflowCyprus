@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -237,10 +238,11 @@ public class UpdateActivity extends Activity {
 								.getText().toString(), etGender
 								.getSelectedItem().toString(), MY_ID);
 
-						ParseQuery<ParseObject> query = ParseQuery.getQuery("Chat");
+						ParseQuery<ParseObject> query = ParseQuery
+								.getQuery("Chat");
 						query.whereEqualTo("User1", MY_ID);
 						query.findInBackground(findQuery);
-						
+
 					} else {
 						// DOESNT EXIST
 						AddToStatusFlow(etStatus.getText().toString(), etAge
@@ -264,4 +266,23 @@ public class UpdateActivity extends Activity {
 	public void terminate(View target) {
 		finish();
 	}
+
+	public void menuUpdateClicked(View target) {
+
+		if (MY_ID != null) {
+			Intent myIntent = new Intent(UpdateActivity.this,
+					MessagesActivity.class);
+
+			myIntent.putExtra("PRIMARY_KEY", MY_ID);
+
+			startActivity(myIntent);
+			finish();
+		} else {
+			Toast.makeText(getApplicationContext(),
+					"You have to configure your beacon first!",
+					Toast.LENGTH_SHORT).show();
+		}
+
+	}
+
 }
