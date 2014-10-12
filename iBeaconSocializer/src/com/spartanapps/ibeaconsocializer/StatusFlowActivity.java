@@ -39,6 +39,8 @@ public class StatusFlowActivity extends Activity {
 
 	private String MY_ID;
 
+	Object lock = new Object();
+
 	SharedPreferences sharedpreferences;
 	private BeaconManager beaconManager;
 	private NotificationManager notificationManager;
@@ -50,17 +52,21 @@ public class StatusFlowActivity extends Activity {
 	private FindCallback<ParseObject> findQuery = new FindCallback<ParseObject>() {
 		public void done(List<ParseObject> objects, ParseException e) {
 			if (e == null) {
-				int x;
-				myStatusList.clear();
-				myStatusListAdapter.notifyDataSetChanged();
 
-				for (x = 0; x < objects.size(); x++) {
-					StatusFlowItem myCurrentItem = new StatusFlowItem(objects
-							.get(x).getString("BeaconID"), objects.get(x)
-							.getString("Gender"), objects.get(x).getString(
-							"Age"), objects.get(x).getString("Status"));
-					myStatusList.add(myCurrentItem);
+				synchronized (lock) {
+					int x;
+					myStatusList.clear();
 					myStatusListAdapter.notifyDataSetChanged();
+
+					for (x = 0; x < objects.size(); x++) {
+						StatusFlowItem myCurrentItem = new StatusFlowItem(
+								objects.get(x).getString("BeaconID"), objects
+										.get(x).getString("Gender"), objects
+										.get(x).getString("Age"), objects
+										.get(x).getString("Status"));
+						myStatusList.add(myCurrentItem);
+						myStatusListAdapter.notifyDataSetChanged();
+					}
 				}
 
 			} else {
@@ -138,7 +144,7 @@ public class StatusFlowActivity extends Activity {
 		// PARSE QUERY
 		query = ParseQuery.getQuery("StatusFlow");
 		// query.whereEqualTo("BeaconID", CurrID);
-		//query.findInBackground(findQuery);
+		// query.findInBackground(findQuery);
 
 		// START LIST CREATION
 
@@ -153,6 +159,10 @@ public class StatusFlowActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		getServer();
+	}
+
+	public void getServer() {
 		ConnectivityManager manager = (ConnectivityManager) getSystemService(StatusFlowActivity.CONNECTIVITY_SERVICE);
 
 		Boolean is3g = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
@@ -212,9 +222,9 @@ public class StatusFlowActivity extends Activity {
 	}
 
 	public void menuRefresh(View target) {
-		myStatusList.clear();
-		myStatusListAdapter.notifyDataSetChanged();
-		query.findInBackground(findQuery);
+
+		getServer();
+
 	}
 
 	public class NoConnectionDialog extends DialogFragment {
