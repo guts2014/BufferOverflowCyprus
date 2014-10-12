@@ -115,7 +115,7 @@ public class StatusFlowActivity extends Activity {
 
 		// LIST ADAPTER
 		myStatusListAdapter = new StatusListArrayAdapter(
-				getApplicationContext(), R.layout.list_status_flow_item,
+				this, R.layout.list_status_flow_item,
 				myStatusList);
 		StatusList.setAdapter(myStatusListAdapter);
 
@@ -221,6 +221,15 @@ public class StatusFlowActivity extends Activity {
 		startActivity(myIntent);
 	}
 
+	public void callChat(View target) {
+		Intent myIntent = new Intent(StatusFlowActivity.this,
+				MessagesActivity.class);
+		
+		myIntent.putExtra("PRIMARY_KEY", MY_ID);
+		startActivity(myIntent);
+	}
+	
+	
 	public void menuRefresh(View target) {
 
 		getServer();

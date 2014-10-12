@@ -41,6 +41,14 @@
             android:label="@string/title_activity_update"
             android:screenOrientation="portrait" >
         </activity>
+        
+        <activity
+            android:name=".MessagesActivity"
+            android:label="@string/title_activity_update"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+        
     </application>
 
 </manifest>

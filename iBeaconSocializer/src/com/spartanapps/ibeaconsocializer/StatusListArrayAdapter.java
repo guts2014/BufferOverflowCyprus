@@ -3,6 +3,7 @@ package com.spartanapps.ibeaconsocializer;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,11 +15,11 @@ import android.widget.Toast;
 
 public class StatusListArrayAdapter extends ArrayAdapter<StatusFlowItem> {
 
-	private Context context;
+	private StatusFlowActivity context;
 	private List<StatusFlowItem> values;
 	private int innerResource;
 
-	public StatusListArrayAdapter(Context context, int resource,
+	public StatusListArrayAdapter(StatusFlowActivity context, int resource,
 			List<StatusFlowItem> myvalues) {
 		super(context, R.layout.list_status_flow_item, myvalues);
 		this.context = context;
@@ -40,8 +41,14 @@ public class StatusListArrayAdapter extends ArrayAdapter<StatusFlowItem> {
 			@Override
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
-				Toast.makeText(context, values.get(position).getStatus(),
-						Toast.LENGTH_SHORT).show();
+				// Toast.makeText(context, values.get(position).getStatus(),
+				// Toast.LENGTH_SHORT).show();
+
+				Intent myIntent = new Intent(context, MessagesActivity.class);
+
+				myIntent.putExtra("PRIMARY_KEY", values.get(position).getID());
+				context.startActivity(myIntent);
+
 			}
 
 		});

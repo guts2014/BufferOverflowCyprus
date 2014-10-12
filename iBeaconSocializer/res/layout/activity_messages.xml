@@ -1,0 +1,86 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#615c45"
+    android:orientation="vertical"
+    tools:context="com.spartanapps.ibeaconsocializer.MessagesActivity" >
+
+    <ImageView
+        android:id="@+id/ivBar"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_weight="1">
+
+            <ListView
+                android:id="@+id/lvConversations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerHeight="10dip"
+                android:layout_margin="10dp" >
+            </ListView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="109dp"
+            android:background="#37361b"
+            android:gravity="bottom"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/buttonSend"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:text="Send a Beacon Reply" />
+
+            <LinearLayout
+                android:id="@+id/layoutMenu"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:weightSum="3" >
+
+                <ImageView
+                    android:id="@+id/ivMenuHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:background="#37361b"
+                    android:src="@drawable/feedsico" />
+
+                <ImageView
+                    android:id="@+id/ivMenuUpdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:background="#37361b"
+                    android:onClick="menuUpdateClicked"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/homeico" />
+
+                <ImageView
+                    android:id="@+id/ivMenuMessages"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#84825e"
+                    android:src="@drawable/messagesico_active" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

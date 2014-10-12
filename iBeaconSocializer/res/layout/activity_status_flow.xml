@@ -63,6 +63,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="#37361b"
+                android:onClick="callChat"
                 android:scaleType="fitCenter"
                 android:src="@drawable/messagesico" />
         </LinearLayout>
