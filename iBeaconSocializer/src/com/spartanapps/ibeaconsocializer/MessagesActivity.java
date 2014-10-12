@@ -213,5 +213,10 @@ public class MessagesActivity extends Activity {
 
 		elagiemou();
 	}
+	public void gohome(View target) {
+
+		finish();
+	}
+
 
 }

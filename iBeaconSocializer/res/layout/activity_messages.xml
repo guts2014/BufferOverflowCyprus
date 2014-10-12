@@ -66,6 +66,7 @@
                     android:layout_height="60dp"
                     android:layout_weight="1"
                     android:background="#37361b"
+                    android:onClick="gohome"
                     android:src="@drawable/feedsico" />
 
                 <ImageView
