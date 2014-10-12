@@ -44,6 +44,18 @@ public class UpdateActivity extends Activity {
 	Spinner etGender;
 	EditText etStatus;
 
+	private FindCallback<ParseObject> findQuery = new FindCallback<ParseObject>() {
+		public void done(List<ParseObject> objects, ParseException e) {
+			if (e == null) {
+
+				for (int x = 0; x < objects.size(); x++) {
+					objects.get(x).deleteInBackground();
+				}
+
+			}
+		}
+	};
+
 	// Functions
 	public void AddToStatusFlow(String Status, String Age, String Gender,
 			String MYID) {
@@ -225,6 +237,10 @@ public class UpdateActivity extends Activity {
 								.getText().toString(), etGender
 								.getSelectedItem().toString(), MY_ID);
 
+						ParseQuery<ParseObject> query = ParseQuery.getQuery("Chat");
+						query.whereEqualTo("User1", MY_ID);
+						query.findInBackground(findQuery);
+						
 					} else {
 						// DOESNT EXIST
 						AddToStatusFlow(etStatus.getText().toString(), etAge
